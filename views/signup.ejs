@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo app</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main_signup">
+        <h2>Signup</h2>
+        <% if (UserError) { %>
+            <p class="error"><%= UserError.message %></p>
+        <% } %> 
+        <form action="/user/signup" method="post">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" value=""><br>
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" value=""><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" value=""><br>
+            <label for="repeat_password">Confirm Password:</label><br>
+            <input type="password" id="repeat_password" name="repeat_password" value=""><br><br>
+            <input type="submit" value="Submit">
+          </form>
+          <br><a href="/login" class="special_links">Already a user? click me</a>
+    </div>
+</body>
+</html>

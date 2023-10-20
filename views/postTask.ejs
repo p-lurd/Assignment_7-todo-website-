@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Task</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="overallPost">
+  <a href="/logout" class="logout_post">Logout</a>
+  <div class="main_post">
+  <h1 class="center">Add a New Task</h1>
+  <div class="task-form">
+    <form method="POST" action="/tasks/post">
+      <input type="hidden" name="user_id" value="<%= user_id %>">
+      <!-- <label for="to_do">Task Description:</label> -->
+      <input type="text" name="to_do" id="to_do" class="task-input" placeholder="Enter a task description" required>
+      <button type="submit" class="buttonAdd">Add Task</button>
+    </form>
+  </div>
+</div>
+</div>
+</body>
+</html>

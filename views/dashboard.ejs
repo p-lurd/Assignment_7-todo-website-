@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="overall">
+    <div class="main">
+        <div class="sub">
+          <a href="/logout" class="logout">Logout</a>
+        <h1 class="center">Welcome to Your Dashboard, <%= user.name %></h1>
+  
+  <!-- Filter by Task Status (No Button) -->
+  <label for="statusFilter" class="blue">Filter by Status:</label>
+  <select id="statusFilter" name="status">
+    <option value="all">All (Pending/Completed)</option>
+    <option value="pending">Pending</option>
+    <option value="completed">Completed</option>
+    <option value="deleted">Delete</option>
+  </select>
+
+  <% if (tasksList && tasksList.length > 0) { %>
+    <h2 class="blue">Your Tasks: </h2>
+    <table>
+      <thead>
+        <tr>
+          <th class="blue">Task</th>
+          <th class="status blue">Status</th>
+          <th class="status_change">Change status/delete</th>
+        </tr>
+      </thead>
+      <tbody class="tbody">
+        <% tasksList.forEach(function(task) { %>
+          <tr>
+            <td><%= task.to_do %></td>
+            <td class="status"><%= task.status %></td>
+            <td class="status_change">
+                <form method="POST" action="/tasks/status">
+                    <input type="hidden" name="_id" value="<%= task._id %>">
+                    <select name="status" onchange="changeStatus(this)" class="blue">
+                      <option value="pending">Pending</option>
+                      <option value="completed">Completed</option>
+                      <option value="deleted">Deleted</option>
+                    </select>
+                    <button type="submit" class="button blue">Change</button>
+                </form>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No tasks found.</p>
+  <% } %>
+  <a href="/tasks/post" class="special_links addTask">Click Here to add more tasks</a>
+</div>
+</div>
+</div>
+<script>
+  function changeStatus(selectElement) {
+    const selectedStatus = selectElement.value;
+    // You can use AJAX or form submission to update the status on the server here if needed.
+
+    // This is just an example of how to update the status in the HTML.
+    const row = selectElement.closest("tr");
+    const statusCell = row.querySelector(".status");
+    statusCell.textContent = selectedStatus;
+  }
+
+  const statusFilter = document.getElementById("statusFilter");
+  const taskRows = document.querySelectorAll("tbody tr");
+
+  statusFilter.addEventListener("change", () => {
+    const selectedStatus = statusFilter.value;
+
+    taskRows.forEach(row => {
+      const statusCell = row.querySelector(".status");
+      if ((selectedStatus === "all" && (statusCell.textContent === "pending" || statusCell.textContent === "completed")) || statusCell.textContent === selectedStatus) {
+        row.style.display = "table-row";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  });
+
+  // Set the default status filter and trigger the change event to filter on page load.
+  statusFilter.value = "all";
+  statusFilter.dispatchEvent(new Event("change"));
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
